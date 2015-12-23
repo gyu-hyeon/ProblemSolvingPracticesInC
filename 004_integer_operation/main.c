@@ -12,6 +12,7 @@ int main(int argc, char const *argv[])
 {
 	FILE * fp;
 	int nCase;
+	int a, b;
 
 	if (!(fp = fopen("input.txt", "r")))
 	{
@@ -23,7 +24,6 @@ int main(int argc, char const *argv[])
 
 	while(nCase--) 
 	{
-		int a, b;
 		fscanf(fp, "%d %d", &a, &b);
 		printIntegerOperation(a, b);
 	}
