@@ -2,7 +2,7 @@
  * @Problem		: Q2. sentense print
  * @Date		: 2015.12.23
  * @name 		: ngh
- * @description : print escape sequence charactors.
+ * @description : print escape sequence characters.
  */
 #include <stdio.h>
 
