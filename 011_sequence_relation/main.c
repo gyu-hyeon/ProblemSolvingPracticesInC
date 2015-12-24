@@ -7,17 +7,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#define ABS(x) (((x) > 0) ? (x) : (-(x)))
+#include "Relation.h"
  
 int main(int argc, char const *argv[])
 {
 	FILE* fp;
 	int nCase;
+	
+	int (*relationFunc[])(int, int) = { isGreaterThanOrEqual, isLessThanOrEqual, isEqual, isSubGreaterThanFive, isMultipleOf, NULL };
 	int* arr;
-	int n, i;
+	int n, i, j;
 	int result[5];
-
+	
 	if (!(fp = fopen("input.txt", "r")))
 	{
 		printf("file open failed\n");
@@ -32,17 +33,16 @@ int main(int argc, char const *argv[])
 		fscanf(fp, "%d", &n);
 		arr = (int*)malloc(sizeof(int) * n);
 
-		for (i = 0; i < n; ++i) fscanf(fp, "%d", arr + i);
-		for (i = 1; i < n; ++i)
-		{
-			if (arr[i - 1] >= arr[i]) ++result[0];
-			if (arr[i - 1] <= arr[i]) ++result[1];
-			if (arr[i - 1] == arr[i]) ++result[2];
-			if (ABS(arr[i - 1] - arr[i]) > 5) ++result[3];
-			if (arr[i - 1] % arr[i] == 0 || arr[i] % arr[i - 1] == 0) ++result[4];
-		}
+		for (i = 0; i < n; ++i) 
+			fscanf(fp, "%d", arr + i);
 		
-		for (i = 0; i < 5; ++i)	printf("%d ", result[i]);
+		for (i = 1; i < n; ++i)
+			for (j = 0; relationFunc[j]; ++j) 
+				result[j] += relationFunc[j](arr[i - 1], arr[i]);
+
+		for (i = 0; i < 5; ++i)	
+			printf("%d ", result[i]);
+	
 		printf("\n");
 		free(arr);
 	}
